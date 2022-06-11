@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class InputTextFieldPasswordWidget extends StatefulWidget {
-  const InputTextFieldPasswordWidget({Key? key}) : super(key: key);
+
+  TextEditingController controller;
+  InputTextFieldPasswordWidget({required this.controller,});
 
   @override
   State<InputTextFieldPasswordWidget> createState() =>
@@ -18,6 +20,7 @@ class _InputTextFieldPasswordWidgetState
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7.0),
       child: TextField(
+        controller: widget.controller,
         obscureText: isInvisible,
         style: TextStyle(
           fontSize: 14,

@@ -4,11 +4,13 @@ class InputTextFieldWidget extends StatelessWidget {
   String hintText;
   int? maxLength;
   TextInputType? textInputType;
+  TextEditingController controller;
 
   InputTextFieldWidget({
     required this.hintText,
     this.maxLength,
     this.textInputType,
+    required this.controller,
   });
 
   @override
@@ -16,6 +18,7 @@ class InputTextFieldWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7.0),
       child: TextField(
+        controller: controller,
         keyboardType: textInputType,
         style: TextStyle(
           fontSize: 14,
