@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
+import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_password_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,9 +32,12 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.white54,
               ),
             ),
-            InputTextFieldWidget(hintText: "Nro. DNI"),
-
-
+            InputTextFieldWidget(
+              hintText: "Nro. DNI",
+              maxLength: 8,
+              textInputType: TextInputType.number,
+            ),
+            InputTextFieldPasswordWidget(),
           ],
         ),
       ),

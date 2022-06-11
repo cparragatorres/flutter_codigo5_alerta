@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
 
-class InputTextFieldWidget extends StatelessWidget {
-  String hintText;
-  int? maxLength;
-  TextInputType? textInputType;
+class InputTextFieldPasswordWidget extends StatefulWidget {
+  const InputTextFieldPasswordWidget({Key? key}) : super(key: key);
 
-  InputTextFieldWidget({
-    required this.hintText,
-    this.maxLength,
-    this.textInputType,
-  });
+  @override
+  State<InputTextFieldPasswordWidget> createState() =>
+      _InputTextFieldPasswordWidgetState();
+}
+
+class _InputTextFieldPasswordWidgetState
+    extends State<InputTextFieldPasswordWidget> {
+
+  bool isInvisible = true;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7.0),
       child: TextField(
-        keyboardType: textInputType,
+        obscureText: isInvisible,
         style: TextStyle(
           fontSize: 14,
           color: Colors.white,
         ),
-        maxLength: maxLength,
         decoration: InputDecoration(
           filled: true,
           fillColor: Color(0xff262A34),
-          hintText: hintText,
+          hintText: "Contraseña",
           hintStyle: TextStyle(
             color: Colors.white38,
             fontSize: 14.0,
           ),
           counterText: "",
+          suffixIcon: IconButton(
+            onPressed: () {
+              isInvisible = !isInvisible;
+              setState(() {
+
+              });
+            },
+            icon: Icon(
+              isInvisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+              color: Colors.white70,
+            ),
+          ),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18.0),
               borderSide: BorderSide.none),
