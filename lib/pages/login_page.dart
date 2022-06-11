@@ -18,6 +18,11 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _dniController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  APIService _apiService = APIService();
+
+  _login(){
+    _apiService.login("asdasdasd", "asdasdasds");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed: () {
 
-                      APIService _apiService = APIService();
-                      _apiService.login("asdasdasd", "asdasdasds");
+                     _login();
 
 
                     },
