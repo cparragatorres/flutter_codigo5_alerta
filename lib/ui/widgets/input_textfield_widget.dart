@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputTextFieldWidget extends StatelessWidget {
   String hintText;
@@ -25,6 +26,11 @@ class InputTextFieldWidget extends StatelessWidget {
           color: Colors.white,
         ),
         maxLength: maxLength,
+        inputFormatters: maxLength != null
+            ? [
+                FilteringTextInputFormatter(RegExp(r'[0-9]'), allow: true),
+              ]
+            : [],
         decoration: InputDecoration(
           filled: true,
           fillColor: Color(0xff262A34),
@@ -50,8 +56,13 @@ class InputTextFieldWidget extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
         ),
-        validator: (String? value){
-          if(value!.isEmpty) return "El campo es obligatorio";
+        validator: (String? value) {
+          if (value!.isEmpty) return "El campo es obligatorio";
+
+          if (maxLength != null) {
+            if (value.length < maxLength!)
+              return "El DNI debe de tener 8 dígitos";
+          }
           return null;
         },
       ),
