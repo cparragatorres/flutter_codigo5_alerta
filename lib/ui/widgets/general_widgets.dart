@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
@@ -8,7 +7,7 @@ SizedBox divider20() => const SizedBox(height: 20.0);
 SizedBox divider30() => const SizedBox(height: 30.0);
 SizedBox divider40() => const SizedBox(height: 40.0);
 
-void snackBarMessage(BuildContext context, TypeMessage typeMessage){
+void snackBarMessage(BuildContext context, TypeMessage typeMessage) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
@@ -22,12 +21,12 @@ void snackBarMessage(BuildContext context, TypeMessage typeMessage){
             messageIcon[typeMessage],
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             width: 8.0,
           ),
           Expanded(
             child: Text(
-                messages[typeMessage]!
+              messages[typeMessage]!,
             ),
           ),
         ],
