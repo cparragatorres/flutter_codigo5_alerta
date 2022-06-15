@@ -22,8 +22,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.dmSansTextTheme(),
       ),
-      home: LoginPage(),
+      home: PreInit(),
     );
   }
 }
+
+class PreInit extends StatelessWidget {
+  SPGlobal spGlobal = SPGlobal();
+  @override
+  Widget build(BuildContext context) {
+    return spGlobal.isLogin ? const HomePage() : const LoginPage();
+  }
+}
+
+
+
 

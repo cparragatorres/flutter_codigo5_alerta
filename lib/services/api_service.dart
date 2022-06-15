@@ -23,6 +23,7 @@ class APIService {
         },
       ),
     );
+    print(response);
     if(response.statusCode == 200){
       Map<String, dynamic> userMap = json.decode(response.body);
       UserModel userModel = UserModel.fromJson(userMap["user"]);
