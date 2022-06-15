@@ -15,11 +15,11 @@ void snackBarMessage(BuildContext context, TypeMessage typeMessage){
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      backgroundColor: kErrorColor,
+      backgroundColor: messageColor[typeMessage],
       content: Row(
         children: [
           Icon(
-            Icons.error_outline,
+            messageIcon[typeMessage],
             color: Colors.white,
           ),
           SizedBox(
@@ -27,7 +27,7 @@ void snackBarMessage(BuildContext context, TypeMessage typeMessage){
           ),
           Expanded(
             child: Text(
-               "Hubo un  inconveniente, por favor, inténtalo nuevamente.",
+                messages[typeMessage]!
             ),
           ),
         ],
