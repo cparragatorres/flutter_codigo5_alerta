@@ -4,6 +4,7 @@ import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_password_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
+import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,32 +29,9 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) {
         if (value != null) {
           //Éxito
+          snackBarMessage(context, TypeMessage.loginSuccess);
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              backgroundColor: kErrorColor,
-              content: Row(
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 8.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Hubo un  inconveniente, por favor, inténtalo nuevamente.",
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          snackBarMessage(context, TypeMessage.error);
         }
       });
     }
