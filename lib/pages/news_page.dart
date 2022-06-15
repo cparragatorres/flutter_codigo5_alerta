@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 
 class NewsPage extends StatefulWidget {
@@ -10,12 +11,22 @@ class _NewsPageState extends State<NewsPage> {
 
 
   final APIService _apiService = APIService();
+  List<NewsModel> news = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _apiService.getNews();
+    getData();
+  }
+
+  getData(){
+    _apiService.getNews().then((value) {
+      news = value;
+      setState(() {
+
+      });
+    });
   }
 
   @override
@@ -24,23 +35,11 @@ class _NewsPageState extends State<NewsPage> {
       appBar: AppBar(
         title: Text("Noticias"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Image.network(
-                "http://alertahunter.herokuapp.com/media/Noticias/pexels-photo-11181151.jpeg",
-              ),
-              Image.network(
-                "http://alertahunter.herokuapp.com/media/Noticias/pexels-photo-12315780.jpeg",
-                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                  return Text("sdsdsd");
-                },
-              ),
-            ],
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: news.length,
+        itemBuilder: (BuildContext context, int index){
+          return Text(news[index].titulo);
+        },
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_codigo5_alerta/helpers/sp_global.dart';
+import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/models/user_model.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -36,11 +37,16 @@ class APIService {
   }
 
 
-  Future<List> getNews() async{
+  Future<List<NewsModel>> getNews() async{
     String _path = pathProduction + "/noticias/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.get(_uri);
-    print(response.statusCode);
+    if(response.statusCode == 200){
+      String source = const Utf8Decoder().convert(response.bodyBytes);
+      List news = json.decode(source);
+      List<NewsModel> newsModelList = news.map((e) => NewsModel.fromJson(e)).toList();
+      return newsModelList;
+    }
     return [];
   }
 
