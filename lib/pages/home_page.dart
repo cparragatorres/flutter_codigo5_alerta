@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 "Alerta Home",
@@ -22,10 +23,19 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              ItemHomeWidget(),
-              ItemHomeWidget(),
-              ItemHomeWidget(),
-              ItemHomeWidget(),
+              const SizedBox(
+                height: 12.0,
+              ),
+              ItemHomeWidget(
+                title: "Noticias",
+                image: "https://images.pexels.com/photos/3856050/pexels-photo-3856050.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              ),
+
+              ItemHomeWidget(
+                title: "Personal",
+                image: "https://images.pexels.com/photos/1557547/pexels-photo-1557547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              ),
+
             ],
           ),
         ),
