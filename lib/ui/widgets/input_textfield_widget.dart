@@ -55,6 +55,9 @@ class InputTextFieldWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(18.0),
             borderSide: BorderSide.none,
           ),
+          errorStyle: const TextStyle(
+            color: Color(0xffef476f),
+          )
         ),
         validator: (String? value) {
           if (value!.isEmpty) return "El campo es obligatorio";

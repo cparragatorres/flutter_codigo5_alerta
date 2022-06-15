@@ -18,8 +18,8 @@ class APIService {
       },
       body: json.encode(
         {
-          "username": "47701122",
-          "password": "3volution"
+          "username": username,
+          "password": password,
         },
       ),
     );

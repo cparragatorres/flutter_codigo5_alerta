@@ -22,9 +22,11 @@ class _LoginPageState extends State<LoginPage> {
 
   APIService _apiService = APIService();
 
-  _login(){
+  void _login(){
     if(_formKey.currentState!.validate()){
-      _apiService.login("asdasdasd", "asdasdasds");
+      _apiService.login(_dniController.text, _passwordController.text).then((value){
+        print(value);
+      });
     }
   }
 

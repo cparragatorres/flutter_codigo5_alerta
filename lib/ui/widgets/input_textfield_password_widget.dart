@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class InputTextFieldPasswordWidget extends StatefulWidget {
-
   TextEditingController controller;
-  InputTextFieldPasswordWidget({required this.controller,});
+  InputTextFieldPasswordWidget({
+    required this.controller,
+  });
 
   @override
   State<InputTextFieldPasswordWidget> createState() =>
@@ -12,7 +13,6 @@ class InputTextFieldPasswordWidget extends StatefulWidget {
 
 class _InputTextFieldPasswordWidgetState
     extends State<InputTextFieldPasswordWidget> {
-
   bool isInvisible = true;
 
   @override
@@ -27,44 +27,47 @@ class _InputTextFieldPasswordWidgetState
           color: Colors.white,
         ),
         decoration: InputDecoration(
-          filled: true,
-          fillColor: Color(0xff262A34),
-          hintText: "Contraseña",
-          hintStyle: TextStyle(
-            color: Colors.white38,
-            fontSize: 14.0,
-          ),
-          counterText: "",
-          suffixIcon: IconButton(
-            onPressed: () {
-              isInvisible = !isInvisible;
-              setState(() {
-
-              });
-            },
-            icon: Icon(
-              isInvisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
-              color: Colors.white70,
+            filled: true,
+            fillColor: Color(0xff262A34),
+            hintText: "Contraseña",
+            hintStyle: TextStyle(
+              color: Colors.white38,
+              fontSize: 14.0,
             ),
-          ),
-          focusedBorder: OutlineInputBorder(
+            counterText: "",
+            suffixIcon: IconButton(
+              onPressed: () {
+                isInvisible = !isInvisible;
+                setState(() {});
+              },
+              icon: Icon(
+                isInvisible
+                    ? Icons.remove_red_eye
+                    : Icons.remove_red_eye_outlined,
+                color: Colors.white70,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18.0),
-              borderSide: BorderSide.none),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            borderSide: BorderSide.none,
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            borderSide: BorderSide.none,
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            borderSide: BorderSide.none,
-          ),
+              borderSide: BorderSide.none,
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              borderSide: BorderSide.none,
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              borderSide: BorderSide.none,
+            ),
+            errorStyle: const TextStyle(
+              color: Color(0xffef476f),
+            ),
         ),
-        validator: (String? value){
-          if(value!.isEmpty) return "El campo es obligatorio";
+        validator: (String? value) {
+          if (value!.isEmpty) return "El campo es obligatorio";
           return null;
         },
       ),
