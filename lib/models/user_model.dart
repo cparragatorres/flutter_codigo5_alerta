@@ -39,5 +39,6 @@ class UserModel {
     "dni": dni,
     "telefono": telefono,
     "direccion": direccion,
+    "token": token ?? "",
   };
 }
