@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 
 class InputTextFieldWidget extends StatelessWidget {
   String hintText;
@@ -56,7 +57,7 @@ class InputTextFieldWidget extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
           errorStyle: const TextStyle(
-            color: Color(0xffef476f),
+            color: kErrorColor,
           )
         ),
         validator: (String? value) {

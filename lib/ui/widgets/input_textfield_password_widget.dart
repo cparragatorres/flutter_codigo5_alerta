@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 
 class InputTextFieldPasswordWidget extends StatefulWidget {
   TextEditingController controller;
@@ -63,7 +64,7 @@ class _InputTextFieldPasswordWidgetState
               borderSide: BorderSide.none,
             ),
             errorStyle: const TextStyle(
-              color: Color(0xffef476f),
+              color: kErrorColor,
             ),
         ),
         validator: (String? value) {

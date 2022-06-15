@@ -14,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final TextEditingController _dniController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -22,10 +21,40 @@ class _LoginPageState extends State<LoginPage> {
 
   APIService _apiService = APIService();
 
-  void _login(){
-    if(_formKey.currentState!.validate()){
-      _apiService.login(_dniController.text, _passwordController.text).then((value){
-        print(value);
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      _apiService
+          .login(_dniController.text, _passwordController.text)
+          .then((value) {
+        if (value != null) {
+          //Éxito
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              backgroundColor: kErrorColor,
+              content: Row(
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Hubo un  inconveniente, por favor, inténtalo nuevamente.",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
       });
     }
   }
@@ -78,10 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 54.0,
                     child: ElevatedButton(
                       onPressed: () {
-
-                       _login();
-
-
+                        _login();
                       },
                       style: ElevatedButton.styleFrom(
                         primary: kBrandSecondaryColor,
@@ -97,22 +123,22 @@ class _LoginPageState extends State<LoginPage> {
                   divider20(),
                   RichText(
                     text: const TextSpan(
-                        text: "¿Aún no estás registrado? ",
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white54,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: " Regístrate",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w600,
-                              color: kBrandSecondaryColor,
-                            ),
+                      text: "¿Aún no estás registrado? ",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white54,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: " Regístrate",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                            color: kBrandSecondaryColor,
                           ),
-                        ],
+                        ),
+                      ],
                     ),
                   ),
                 ],
