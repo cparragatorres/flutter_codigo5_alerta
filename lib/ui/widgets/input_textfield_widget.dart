@@ -17,7 +17,7 @@ class InputTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7.0),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: textInputType,
         style: TextStyle(
@@ -41,7 +41,19 @@ class InputTextFieldWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(18.0),
             borderSide: BorderSide.none,
           ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: BorderSide.none,
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: BorderSide.none,
+          ),
         ),
+        validator: (String? value){
+          if(value!.isEmpty) return "El campo es obligatorio";
+          return null;
+        },
       ),
     );
   }

@@ -18,10 +18,14 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _dniController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   APIService _apiService = APIService();
 
   _login(){
-    _apiService.login("asdasdasd", "asdasdasds");
+    if(_formKey.currentState!.validate()){
+      _apiService.login("asdasdasd", "asdasdasds");
+    }
   }
 
   @override
@@ -32,82 +36,85 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                divider20(),
-                SvgPicture.asset(
-                  'assets/images/imagen2.svg',
-                  height: 120,
-                ),
-                divider20(),
-                const Text(
-                  "Bienvenido",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.w600,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  divider20(),
+                  SvgPicture.asset(
+                    'assets/images/imagen2.svg',
+                    height: 120,
                   ),
-                ),
-                const Text(
-                  "Por favor, ingresa tus credenciales",
-                  style: TextStyle(
-                    color: Colors.white54,
-                  ),
-                ),
-                divider12(),
-                InputTextFieldWidget(
-                  hintText: "Nro. DNI",
-                  maxLength: 8,
-                  textInputType: TextInputType.number,
-                  controller: _dniController,
-                ),
-                InputTextFieldPasswordWidget(
-                  controller: _passwordController,
-                ),
-                divider20(),
-                SizedBox(
-                  width: double.infinity,
-                  height: 54.0,
-                  child: ElevatedButton(
-                    onPressed: () {
-
-                     _login();
-
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: kBrandSecondaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                    ),
-                    child: const Text(
-                      "Iniciar Sesión",
+                  divider20(),
+                  const Text(
+                    "Bienvenido",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                divider20(),
-                RichText(
-                  text: const TextSpan(
-                      text: "¿Aún no estás registrado? ",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white54,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: " Regístrate",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w600,
-                            color: kBrandSecondaryColor,
-                          ),
+                  const Text(
+                    "Por favor, ingresa tus credenciales",
+                    style: TextStyle(
+                      color: Colors.white54,
+                    ),
+                  ),
+                  divider12(),
+                  InputTextFieldWidget(
+                    hintText: "Nro. DNI",
+                    maxLength: 8,
+                    textInputType: TextInputType.number,
+                    controller: _dniController,
+                  ),
+                  InputTextFieldPasswordWidget(
+                    controller: _passwordController,
+                  ),
+                  divider20(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                       _login();
+
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: kBrandSecondaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
-                      ],
+                      ),
+                      child: const Text(
+                        "Iniciar Sesión",
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  divider20(),
+                  RichText(
+                    text: const TextSpan(
+                        text: "¿Aún no estás registrado? ",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white54,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: " Regístrate",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w600,
+                              color: kBrandSecondaryColor,
+                            ),
+                          ),
+                        ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
