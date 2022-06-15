@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/services/api_service.dart';
 
-class NewsPage extends StatelessWidget {
-  const NewsPage({Key? key}) : super(key: key);
+class NewsPage extends StatefulWidget {
+  @override
+  State<NewsPage> createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage> {
+
+
+  final APIService _apiService = APIService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _apiService.getNews();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +38,6 @@ class NewsPage extends StatelessWidget {
                   return Text("sdsdsd");
                 },
               ),
-
-
             ],
           ),
         ),

@@ -23,7 +23,7 @@ class APIService {
         },
       ),
     );
-    print(response);
+
     if(response.statusCode == 200){
       Map<String, dynamic> userMap = json.decode(response.body);
       UserModel userModel = UserModel.fromJson(userMap["user"]);
@@ -34,5 +34,16 @@ class APIService {
     }
     return null;
   }
+
+
+  Future<List> getNews() async{
+    String _path = pathProduction + "/noticias/";
+    Uri _uri = Uri.parse(_path);
+    http.Response response = await http.get(_uri);
+    print(response.statusCode);
+    return [];
+  }
+
+
 
 }
