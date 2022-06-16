@@ -29,6 +29,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBrandPrimaryColor,
       appBar: AppBar(
         backgroundColor: kBrandPrimaryColor,
         title: Text("Noticias"),
@@ -37,29 +38,54 @@ class _NewsPageState extends State<NewsPage> {
       body: ListView.builder(
         itemCount: news.length,
         itemBuilder: (BuildContext context, int index) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(14.0),
-            child: Container(
-              margin:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-              width: double.infinity,
-              height: 260,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.network(
-                    news[index].imagen,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object error,
-                        StackTrace? stackTrace) {
-                      return Image.network(
-                        "https://images.pexels.com/photos/11513528/pexels-photo-11513528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                        fit: BoxFit.cover,
-                      );
-                    },
+          return Container(
+            margin:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+            width: double.infinity,
+            height: 260,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.network(
+                  news[index].imagen,
+                  fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                    return Image.network(
+                      "https://images.pexels.com/photos/11513528/pexels-photo-11513528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.center,
+                        colors: [
+                          Colors.black.withOpacity(0.7),
+                          Colors.transparent,
+                        ],
+                      )),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        news[index].titulo,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
