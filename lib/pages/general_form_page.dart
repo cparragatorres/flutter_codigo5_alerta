@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
+import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
+import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 
 class GeneralFormPage extends StatefulWidget {
@@ -34,6 +36,13 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
               InputTextFieldWidget(
                 hintText: "Link",
                 controller: _linkController,
+              ),
+              divider20(),
+              ButtonNormalWidget(
+                title: "Guardar",
+                onPressed: () {
+
+                },
               ),
             ],
           ),

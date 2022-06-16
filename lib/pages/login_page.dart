@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/pages/home_page.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
+import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_password_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
@@ -28,20 +29,19 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     if (_formKey.currentState!.validate()) {
       isLoading = true;
-      setState(() {
-
-      });
+      setState(() {});
       _apiService
           .login(_dniController.text, _passwordController.text)
           .then((value) {
         if (value != null) {
           isLoading = false;
-          setState(() {
-
-          });
+          setState(() {});
           snackBarMessage(context, TypeMessage.loginSuccess);
           // Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (route) => false);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (route) => false);
         } else {
           snackBarMessage(context, TypeMessage.error);
         }
@@ -94,23 +94,11 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _passwordController,
                       ),
                       divider20(),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 54.0,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            _login();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: kBrandSecondaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
-                          child: const Text(
-                            "Iniciar Sesión",
-                          ),
-                        ),
+                      ButtonNormalWidget(
+                        title: "Iniciar Sesión",
+                        onPressed: () {
+                          _login();
+                        },
                       ),
                       divider20(),
                       RichText(
@@ -139,19 +127,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          isLoading ?  Container(
-            color: kBrandPrimaryColor.withOpacity(0.85),
-            child: const Center(
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  color: kBrandSecondaryColor,
-                  strokeWidth: 2.3,
-                ),
-              ),
-            ),
-          ): const SizedBox(),
+          isLoading
+              ? Container(
+                  color: kBrandPrimaryColor.withOpacity(0.85),
+                  child: const Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: kBrandSecondaryColor,
+                        strokeWidth: 2.3,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
