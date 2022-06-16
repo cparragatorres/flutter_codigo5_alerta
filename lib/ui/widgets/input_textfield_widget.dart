@@ -30,6 +30,11 @@ class InputTextFieldWidget extends StatelessWidget {
             firstDate: DateTime(2000),
             lastDate: DateTime(2030),
           );
+
+          if(datePicker != null){
+            controller.text = datePicker.toString().substring(0, 10);
+          }
+
         } : null,
         controller: controller,
         keyboardType: textInputType,
