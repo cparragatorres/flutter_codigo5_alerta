@@ -49,7 +49,7 @@ class APIService {
     return [];
   }
 
-  updateNews(NewsModel newsModel) async {
+  Future<NewsModel?> updateNews(NewsModel newsModel) async {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.patch(
@@ -64,6 +64,14 @@ class APIService {
         },
       ),
     );
-    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      String source = Utf8Decoder().convert(response.bodyBytes);
+      Map<String, dynamic> newsMap = json.decode(source);
+      NewsModel newsModel = NewsModel.fromJson(newsMap);
+      return newsModel;
+    }
+    return null;
+
   }
 }
