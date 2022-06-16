@@ -19,6 +19,7 @@ class GeneralFormPage extends StatefulWidget {
 class _GeneralFormPageState extends State<GeneralFormPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   final APIService _apiService = APIService();
   final _formKey = GlobalKey<FormState>();
@@ -46,7 +47,6 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         fecha: DateTime.now(),
         imagen: "",
       );
-
       _apiService.updateNews(newsModel).then((value){
         if(value != null){
           snackBarMessage(context, TypeMessage.success);
@@ -83,6 +83,11 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
                 InputTextFieldWidget(
                   hintText: "Link",
                   controller: _linkController,
+                ),
+                InputTextFieldWidget(
+                  hintText: "Fecha",
+                  controller: _dateController,
+                  isSelectDate: true,
                 ),
                 divider20(),
                 ButtonNormalWidget(
