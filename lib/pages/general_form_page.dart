@@ -6,6 +6,7 @@ import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GeneralFormPage extends StatefulWidget {
   NewsModel? newsModel;
@@ -24,7 +25,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
   final APIService _apiService = APIService();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -33,13 +34,20 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
     if (widget.newsModel != null) {
       _titleController.text = widget.newsModel!.titulo;
       _linkController.text = widget.newsModel!.link;
+      _dateController.text = widget.newsModel!.fecha;
     }
   }
 
-  _save(){
-    if(_formKey.currentState!.validate()){
+  getImageGallery() async{
+    XFile? imageXFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    print(imageXFile!.path);
+  }
+
+
+  _save() {
+    if (_formKey.currentState!.validate()) {
       isLoading = true;
-      setState((){});
+      setState(() {});
       NewsModel newsModel = NewsModel(
         id: widget.newsModel!.id,
         link: _linkController.text,
@@ -47,19 +55,18 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         fecha: _dateController.text,
         imagen: "",
       );
-      _apiService.updateNews(newsModel).then((value){
-        if(value != null){
+      _apiService.updateNews(newsModel).then((value) {
+        if (value != null) {
           snackBarMessage(context, TypeMessage.success);
           Navigator.pop(context);
-        }else{
+        } else {
           isLoading = false;
           snackBarMessage(context, TypeMessage.error);
-          setState((){});
+          setState(() {});
         }
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -68,39 +75,52 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
       appBar: AppBar(
         backgroundColor: kBrandPrimaryColor,
         title: Text("Form"),
-      ),
-      body: !isLoading ? SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                InputTextFieldWidget(
-                  hintText: "Título",
-                  controller: _titleController,
-                ),
-                InputTextFieldWidget(
-                  hintText: "Link",
-                  controller: _linkController,
-                ),
-                InputTextFieldWidget(
-                  hintText: "Fecha",
-                  controller: _dateController,
-                  isSelectDate: true,
-                ),
-                divider20(),
-                ButtonNormalWidget(
-                  title: "Guardar",
-                  onPressed: () {
-                    _save();
-                  },
-                ),
-              ],
+        actions: [
+          IconButton(
+            onPressed: () {
+              getImageGallery();
+            },
+            icon: Icon(
+              Icons.image,
             ),
           ),
-        ),
-      ): Center(child: CircularProgressIndicator()),
+        ],
+      ),
+      body: !isLoading
+          ? SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      InputTextFieldWidget(
+                        hintText: "Título",
+                        controller: _titleController,
+                      ),
+                      InputTextFieldWidget(
+                        hintText: "Link",
+                        controller: _linkController,
+                      ),
+                      InputTextFieldWidget(
+                        hintText: "Fecha",
+                        controller: _dateController,
+                        isSelectDate: true,
+                      ),
+                      divider20(),
+                      ButtonNormalWidget(
+                        title: "Guardar",
+                        onPressed: () {
+                          _save();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }
