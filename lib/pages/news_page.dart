@@ -37,26 +37,29 @@ class _NewsPageState extends State<NewsPage> {
       body: ListView.builder(
         itemCount: news.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-            width: double.infinity,
-            height: 260,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.network(
-                  news[index].imagen,
-                  fit: BoxFit.cover,
-                  errorBuilder: (BuildContext context, Object error,
-                      StackTrace? stackTrace) {
-                    return Image.network(
-                      "https://images.pexels.com/photos/11513528/pexels-photo-11513528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                      fit: BoxFit.cover,
-                    );
-                  },
-                ),
-              ],
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(14.0),
+            child: Container(
+              margin:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+              width: double.infinity,
+              height: 260,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.network(
+                    news[index].imagen,
+                    fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object error,
+                        StackTrace? stackTrace) {
+                      return Image.network(
+                        "https://images.pexels.com/photos/11513528/pexels-photo-11513528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
