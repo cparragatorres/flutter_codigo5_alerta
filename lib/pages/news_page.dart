@@ -56,7 +56,7 @@ class _NewsPageState extends State<NewsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GeneralFormPage(),
+                        builder: (context) => GeneralFormPage(newsModel: news[index]),
                       ),
                     ).then((value) {
                       getData();

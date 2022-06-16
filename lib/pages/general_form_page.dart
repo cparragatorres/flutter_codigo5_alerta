@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
@@ -6,8 +7,8 @@ import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 
 class GeneralFormPage extends StatefulWidget {
-  const GeneralFormPage({Key? key}) : super(key: key);
-
+  NewsModel? newsModel;
+  GeneralFormPage({this.newsModel});
   @override
   State<GeneralFormPage> createState() => _GeneralFormPageState();
 }
@@ -19,6 +20,15 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
   final APIService _apiService = APIService();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.newsModel != null){
+      _titleController.text = widget.newsModel!.titulo;
+      _linkController.text = widget.newsModel!.link;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
