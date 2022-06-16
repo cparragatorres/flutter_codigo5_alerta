@@ -5,6 +5,7 @@ import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
+import 'package:flutter_codigo5_alerta/utils/constants.dart';
 
 class GeneralFormPage extends StatefulWidget {
   NewsModel? newsModel;
@@ -20,6 +21,8 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
   final TextEditingController _linkController = TextEditingController();
 
   final APIService _apiService = APIService();
+  final _formKey = GlobalKey<FormState>();
+
 
   @override
   void initState() {
@@ -30,6 +33,28 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
       _linkController.text = widget.newsModel!.link;
     }
   }
+
+  _save(){
+    if(_formKey.currentState!.validate()){
+
+
+      NewsModel newsModel = NewsModel(
+        id: widget.newsModel!.id,
+        link: _linkController.text,
+        titulo: _titleController.text,
+        fecha: DateTime.now(),
+        imagen: "",
+      );
+
+      _apiService.updateNews(newsModel).then((value){
+        if(value != null){
+          snackBarMessage(context, TypeMessage.success);
+          Navigator.pop(context);
+        }
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,32 +67,27 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14.0),
-          child: Column(
-            children: [
-              InputTextFieldWidget(
-                hintText: "Título",
-                controller: _titleController,
-              ),
-              InputTextFieldWidget(
-                hintText: "Link",
-                controller: _linkController,
-              ),
-              divider20(),
-              ButtonNormalWidget(
-                title: "Guardar",
-                onPressed: () {
-                  NewsModel newsModel = NewsModel(
-                    id: widget.newsModel!.id,
-                    link: _linkController.text,
-                    titulo: _titleController.text,
-                    fecha: DateTime.now(),
-                    imagen: "",
-                  );
-
-                  _apiService.updateNews(newsModel);
-                },
-              ),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                InputTextFieldWidget(
+                  hintText: "Título",
+                  controller: _titleController,
+                ),
+                InputTextFieldWidget(
+                  hintText: "Link",
+                  controller: _linkController,
+                ),
+                divider20(),
+                ButtonNormalWidget(
+                  title: "Guardar",
+                  onPressed: () {
+                    _save();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
