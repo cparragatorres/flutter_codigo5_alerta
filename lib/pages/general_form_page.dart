@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
@@ -15,6 +16,9 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
+
+  final APIService _apiService = APIService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
               ButtonNormalWidget(
                 title: "Guardar",
                 onPressed: () {
-
+                  _apiService.updateNews();
                 },
               ),
             ],
