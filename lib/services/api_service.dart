@@ -52,6 +52,7 @@ class APIService {
   Future<NewsModel?> updateNews(NewsModel newsModel) async {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
+    print(newsModel.fecha);
     http.Response response = await http.patch(
       _uri,
       headers: {
