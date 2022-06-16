@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/news_model.dart';
+import 'package:flutter_codigo5_alerta/pages/general_form_page.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/item_news_widget.dart';
@@ -46,6 +47,9 @@ class _NewsPageState extends State<NewsPage> {
         itemBuilder: (BuildContext context, int index) {
           return ItemNewsWidget(
             newsModel: news[index],
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> GeneralFormPage()));
+            },
           );
         },
       ),
