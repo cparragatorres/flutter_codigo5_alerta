@@ -8,13 +8,14 @@ import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 
 class GeneralFormPage extends StatefulWidget {
   NewsModel? newsModel;
+
   GeneralFormPage({this.newsModel});
+
   @override
   State<GeneralFormPage> createState() => _GeneralFormPageState();
 }
 
 class _GeneralFormPageState extends State<GeneralFormPage> {
-
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
 
@@ -24,7 +25,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.newsModel != null){
+    if (widget.newsModel != null) {
       _titleController.text = widget.newsModel!.titulo;
       _linkController.text = widget.newsModel!.link;
     }
@@ -55,7 +56,15 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
               ButtonNormalWidget(
                 title: "Guardar",
                 onPressed: () {
-                  _apiService.updateNews();
+                  NewsModel newsModel = NewsModel(
+                    id: widget.newsModel!.id,
+                    link: _linkController.text,
+                    titulo: _titleController.text,
+                    fecha: DateTime.now(),
+                    imagen: "",
+                  );
+
+                  _apiService.updateNews(newsModel);
                 },
               ),
             ],

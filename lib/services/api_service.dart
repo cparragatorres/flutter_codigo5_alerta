@@ -49,8 +49,8 @@ class APIService {
     return [];
   }
 
-  updateNews() async {
-    String _path = pathProduction + "/noticias/1/";
+  updateNews(NewsModel newsModel) async {
+    String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.patch(
       _uri,
@@ -59,9 +59,8 @@ class APIService {
       },
       body: json.encode(
         {
-          "titulo": "Titulo desde el App 6",
-          "link":
-              "https://www.youtube.com/watch?v=gC-SAwBYePA&ab_channel=YleVids",
+          "titulo": newsModel.titulo,
+          "link": newsModel.link,
         },
       ),
     );
