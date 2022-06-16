@@ -61,6 +61,7 @@ class APIService {
         {
           "titulo": newsModel.titulo,
           "link": newsModel.link,
+          "fecha": newsModel.fecha,
         },
       ),
     );

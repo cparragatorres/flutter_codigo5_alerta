@@ -44,7 +44,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         id: widget.newsModel!.id,
         link: _linkController.text,
         titulo: _titleController.text,
-        fecha: DateTime.now(),
+        fecha: _dateController.text,
         imagen: "",
       );
       _apiService.updateNews(newsModel).then((value){

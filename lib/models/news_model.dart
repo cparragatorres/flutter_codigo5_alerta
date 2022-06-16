@@ -11,14 +11,14 @@ class NewsModel {
   int id;
   String link;
   String titulo;
-  DateTime fecha;
+  String fecha;
   String imagen;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
     id: json["id"],
     link: json["link"],
     titulo: json["titulo"],
-    fecha: DateTime.parse(json["fecha"]),
+    fecha: json["fecha"],
     imagen: json["imagen"],
   );
 
@@ -26,7 +26,7 @@ class NewsModel {
     "id": id,
     "link": link,
     "titulo": titulo,
-    "fecha": "${fecha.year.toString().padLeft(4, '0')}-${fecha.month.toString().padLeft(2, '0')}-${fecha.day.toString().padLeft(2, '0')}",
+    "fecha": fecha,
     "imagen": imagen,
   };
 }
