@@ -22,6 +22,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
   final APIService _apiService = APIService();
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
 
   @override
@@ -36,8 +37,8 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
   _save(){
     if(_formKey.currentState!.validate()){
-
-
+      isLoading = true;
+      setState((){});
       NewsModel newsModel = NewsModel(
         id: widget.newsModel!.id,
         link: _linkController.text,
@@ -50,6 +51,10 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         if(value != null){
           snackBarMessage(context, TypeMessage.success);
           Navigator.pop(context);
+        }else{
+          isLoading = false;
+          snackBarMessage(context, TypeMessage.error);
+          setState((){});
         }
       });
     }
@@ -64,7 +69,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         backgroundColor: kBrandPrimaryColor,
         title: Text("Form"),
       ),
-      body: SingleChildScrollView(
+      body: !isLoading ? SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14.0),
           child: Form(
@@ -90,7 +95,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
             ),
           ),
         ),
-      ),
+      ): Center(child: CircularProgressIndicator()),
     );
   }
 }
