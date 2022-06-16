@@ -13,6 +13,7 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   final APIService _apiService = APIService();
   List<NewsModel> news = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -22,8 +23,11 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   getData() {
+    isLoading = true;
+    setState((){});
     _apiService.getNews().then((value) {
       news = value;
+      isLoading = false;
       setState(() {});
     });
   }
@@ -42,17 +46,28 @@ class _NewsPageState extends State<NewsPage> {
         child: Icon(Icons.add),
         onPressed: () {},
       ),
-      body: ListView.builder(
-        itemCount: news.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ItemNewsWidget(
-            newsModel: news[index],
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> GeneralFormPage()));
-            },
-          );
-        },
-      ),
+      body: !isLoading
+          ? ListView.builder(
+              itemCount: news.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemNewsWidget(
+                  newsModel: news[index],
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GeneralFormPage(),
+                      ),
+                    ).then((value) {
+                      getData();
+                    });
+                  },
+                );
+              },
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
