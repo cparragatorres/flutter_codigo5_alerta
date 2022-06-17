@@ -76,4 +76,20 @@ class APIService {
     return null;
 
   }
+
+  updateNews2(NewsModel newsModel) async{
+    String _path = pathProduction + "/noticias/${newsModel.id}/";
+    Uri _uri = Uri.parse(_path);
+    final request = http.MultipartRequest("PATCH", _uri);
+    request.fields["titulo"] = newsModel.titulo;
+    request.fields["link"] = newsModel.link;
+    request.fields["fecha"] = newsModel.fecha;
+
+    http.StreamedResponse streamedResponse = await request.send();
+    http.Response response = await http.Response.fromStream(streamedResponse);
+    print(response.statusCode);
+
+  }
+
+
 }

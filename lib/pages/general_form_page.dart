@@ -59,7 +59,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         fecha: _dateController.text,
         imagen: "",
       );
-      _apiService.updateNews(newsModel).then((value) {
+      _apiService.updateNews2(newsModel).then((value) {
         if (value != null) {
           snackBarMessage(context, TypeMessage.success);
           Navigator.pop(context);
