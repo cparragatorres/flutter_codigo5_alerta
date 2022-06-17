@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/pages/alert_page.dart';
+import 'package:flutter_codigo5_alerta/pages/news_page.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/item_home_widget.dart';
 
@@ -29,11 +31,13 @@ class HomePage extends StatelessWidget {
               ItemHomeWidget(
                 title: "Noticias",
                 image: "https://images.pexels.com/photos/3856050/pexels-photo-3856050.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                toPage: NewsPage(),
               ),
 
               ItemHomeWidget(
-                title: "Personal",
+                title: "Alertas",
                 image: "https://images.pexels.com/photos/1557547/pexels-photo-1557547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                toPage: AlertPage(),
               ),
 
             ],

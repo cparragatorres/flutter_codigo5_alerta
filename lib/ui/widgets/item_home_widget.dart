@@ -4,17 +4,19 @@ import 'package:flutter_codigo5_alerta/pages/news_page.dart';
 class ItemHomeWidget extends StatelessWidget {
   String title;
   String image;
+  Widget toPage;
 
   ItemHomeWidget({
     required this.title,
     required this.image,
+    required this.toPage,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> NewsPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> toPage));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
