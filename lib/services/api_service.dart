@@ -6,6 +6,7 @@ import 'package:flutter_codigo5_alerta/models/user_model.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime_type/mime_type.dart';
+import 'package:http_parser/http_parser.dart';
 
 class APIService {
   SPGlobal spGlobal = SPGlobal();
@@ -81,24 +82,26 @@ class APIService {
   updateNews2(NewsModel newsModel, File? imageNews) async {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
+    final request = http.MultipartRequest("PATCH", _uri);
 
-    List<String> mimeType = mime(imageNews.path)!.split("/");
 
-    http.MultipartFile.fromPath(
+    List<String> mimeType = mime(imageNews!.path)!.split("/");
+
+    http.MultipartFile file = await http.MultipartFile.fromPath(
       "imagen",
       imageNews!.path,
       contentType: MediaType(mimeType[0], mimeType[1]),
     );
 
-    // final request = http.MultipartRequest("PATCH", _uri);
-    //
-    // request.fields["titulo"] = newsModel.titulo;
-    // request.fields["link"] = newsModel.link;
-    // request.fields["fecha"] = newsModel.fecha;
-    //
-    //
-    // http.StreamedResponse streamedResponse = await request.send();
-    // http.Response response = await http.Response.fromStream(streamedResponse);
-    // print(response.statusCode);
+    request.files.add(file);
+
+    request.fields["titulo"] = newsModel.titulo;
+    request.fields["link"] = newsModel.link;
+    request.fields["fecha"] = newsModel.fecha;
+
+
+    http.StreamedResponse streamedResponse = await request.send();
+    http.Response response = await http.Response.fromStream(streamedResponse);
+    print(response.statusCode);
   }
 }
