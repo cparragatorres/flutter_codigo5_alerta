@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_codigo5_alerta/helpers/sp_global.dart';
 import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/models/user_model.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:mime_type/mime_type.dart';
 
 class APIService {
   SPGlobal spGlobal = SPGlobal();
@@ -67,29 +69,36 @@ class APIService {
       ),
     );
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       String source = Utf8Decoder().convert(response.bodyBytes);
       Map<String, dynamic> newsMap = json.decode(source);
       NewsModel newsModel = NewsModel.fromJson(newsMap);
       return newsModel;
     }
     return null;
-
   }
 
-  updateNews2(NewsModel newsModel) async{
+  updateNews2(NewsModel newsModel, File? imageNews) async {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
-    final request = http.MultipartRequest("PATCH", _uri);
-    request.fields["titulo"] = newsModel.titulo;
-    request.fields["link"] = newsModel.link;
-    request.fields["fecha"] = newsModel.fecha;
 
-    http.StreamedResponse streamedResponse = await request.send();
-    http.Response response = await http.Response.fromStream(streamedResponse);
-    print(response.statusCode);
+    List<String> mimeType = mime(imageNews.path)!.split("/");
 
+    http.MultipartFile.fromPath(
+      "imagen",
+      imageNews!.path,
+      contentType: MediaType(mimeType[0], mimeType[1]),
+    );
+
+    // final request = http.MultipartRequest("PATCH", _uri);
+    //
+    // request.fields["titulo"] = newsModel.titulo;
+    // request.fields["link"] = newsModel.link;
+    // request.fields["fecha"] = newsModel.fecha;
+    //
+    //
+    // http.StreamedResponse streamedResponse = await request.send();
+    // http.Response response = await http.Response.fromStream(streamedResponse);
+    // print(response.statusCode);
   }
-
-
 }
