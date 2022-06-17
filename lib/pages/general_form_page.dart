@@ -41,12 +41,12 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
     }
   }
 
-  getImageGallery() async{
-    XFile? imageXFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+  getImageGallery() async {
+    XFile? imageXFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     imageNews = imageXFile;
-    setState((){});
+    setState(() {});
   }
-
 
   _save() {
     if (_formKey.currentState!.validate()) {
@@ -112,9 +112,11 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
                         controller: _dateController,
                         isSelectDate: true,
                       ),
-
-                      imageNews == null ? Container() : Image.file(File(imageNews!.path)),
-
+                      imageNews == null
+                          ? Container()
+                          : Image.file(
+                              File(imageNews!.path),
+                            ),
                       divider20(),
                       ButtonNormalWidget(
                         title: "Guardar",
