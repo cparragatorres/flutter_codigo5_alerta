@@ -79,7 +79,7 @@ class APIService {
     return null;
   }
 
-  updateNews2(NewsModel newsModel, File? imageNews) async {
+  Future<NewsModel?> updateNews2(NewsModel newsModel, File? imageNews) async {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
     final request = http.MultipartRequest("PATCH", _uri);
@@ -97,6 +97,12 @@ class APIService {
     request.fields["fecha"] = newsModel.fecha;
     http.StreamedResponse streamedResponse = await request.send();
     http.Response response = await http.Response.fromStream(streamedResponse);
-    print(response.statusCode);
+    if(response.statusCode == 200){
+      String source = Utf8Decoder().convert(response.bodyBytes);
+      Map<String, dynamic> newsMap = json.decode(source);
+      NewsModel newsModel = NewsModel.fromJson(newsMap);
+      return newsModel;
+    }
+    return null;
   }
 }
