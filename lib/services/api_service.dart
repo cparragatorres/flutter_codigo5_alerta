@@ -85,15 +85,16 @@ class APIService {
     final request = http.MultipartRequest("PATCH", _uri);
 
 
-    List<String> mimeType = mime(imageNews!.path)!.split("/");
+    if(imageNews != null){
+      List<String> mimeType = mime(imageNews.path)!.split("/");
+      http.MultipartFile file = await http.MultipartFile.fromPath(
+        "imagen",
+        imageNews.path,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      request.files.add(file);
+    }
 
-    http.MultipartFile file = await http.MultipartFile.fromPath(
-      "imagen",
-      imageNews!.path,
-      contentType: MediaType(mimeType[0], mimeType[1]),
-    );
-
-    request.files.add(file);
 
     request.fields["titulo"] = newsModel.titulo;
     request.fields["link"] = newsModel.link;
