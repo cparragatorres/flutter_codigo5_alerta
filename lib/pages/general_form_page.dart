@@ -9,6 +9,8 @@ import 'package:flutter_codigo5_alerta/ui/widgets/general_widgets.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/input_textfield_widget.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
+
 
 class GeneralFormPage extends StatefulWidget {
   NewsModel? newsModel;
@@ -48,7 +50,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
     setState(() {});
   }
 
-  _save() {
+  _save() async{
     if (_formKey.currentState!.validate()) {
       isLoading = true;
       setState(() {});
@@ -59,7 +61,15 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
         fecha: _dateController.text,
         imagen: "",
       );
+
       File? _image = imageNews == null ? null : File(imageNews!.path);
+
+      if(_image != null){
+        _image = await FlutterNativeImage.compressImage(_image.path, quality: 50,);
+        print(_image.lengthSync());
+      }
+
+
 
       _apiService.updateNews2(newsModel, _image).then((value) {
         if (value != null) {

@@ -83,8 +83,6 @@ class APIService {
     String _path = pathProduction + "/noticias/${newsModel.id}/";
     Uri _uri = Uri.parse(_path);
     final request = http.MultipartRequest("PATCH", _uri);
-
-
     if(imageNews != null){
       List<String> mimeType = mime(imageNews.path)!.split("/");
       http.MultipartFile file = await http.MultipartFile.fromPath(
@@ -94,13 +92,9 @@ class APIService {
       );
       request.files.add(file);
     }
-
-
     request.fields["titulo"] = newsModel.titulo;
     request.fields["link"] = newsModel.link;
     request.fields["fecha"] = newsModel.fecha;
-
-
     http.StreamedResponse streamedResponse = await request.send();
     http.Response response = await http.Response.fromStream(streamedResponse);
     print(response.statusCode);
