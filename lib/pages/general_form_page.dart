@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
@@ -26,6 +28,7 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   final ImagePicker _imagePicker = ImagePicker();
+  XFile? imageNews;
 
   @override
   void initState() {
@@ -40,7 +43,8 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
   getImageGallery() async{
     XFile? imageXFile = await _imagePicker.pickImage(source: ImageSource.gallery);
-    print(imageXFile!.path);
+    imageNews = imageXFile;
+    setState((){});
   }
 
 
@@ -108,6 +112,9 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
                         controller: _dateController,
                         isSelectDate: true,
                       ),
+
+                      imageNews == null ? Container() : Image.file(File(imageNews!.path)),
+
                       divider20(),
                       ButtonNormalWidget(
                         title: "Guardar",
