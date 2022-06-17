@@ -112,11 +112,23 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
                         controller: _dateController,
                         isSelectDate: true,
                       ),
-                      imageNews == null
-                          ? Container()
-                          : Image.file(
-                              File(imageNews!.path),
-                            ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 12.0),
+                        width: double.infinity,
+                        height: 300,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14.0),
+                          child: imageNews == null
+                              ? Image.asset(
+                                  "assets/images/imagex1.jpeg",
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  File(imageNews!.path),
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      ),
                       divider20(),
                       ButtonNormalWidget(
                         title: "Guardar",
