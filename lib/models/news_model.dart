@@ -1,14 +1,14 @@
 
 class NewsModel {
   NewsModel({
-    required this.id,
+    this.id,
     required this.link,
     required this.titulo,
     required this.fecha,
     required this.imagen,
   });
 
-  int id;
+  int? id;
   String link;
   String titulo;
   String fecha;

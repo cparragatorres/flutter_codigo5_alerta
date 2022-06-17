@@ -79,11 +79,11 @@ class APIService {
     return null;
   }
 
-  Future<NewsModel?> updateNews2(NewsModel newsModel, File? imageNews) async {
-    String _path = pathProduction + "/noticias/${newsModel.id}/";
+  Future<NewsModel?> registerNews(NewsModel newsModel, File? imageNews) async {
+    String _path = pathProduction + "/noticias/";
     Uri _uri = Uri.parse(_path);
-    final request = http.MultipartRequest("PATCH", _uri);
-    if(imageNews != null){
+    final request = http.MultipartRequest("POST", _uri);
+    if (imageNews != null) {
       List<String> mimeType = mime(imageNews.path)!.split("/");
       http.MultipartFile file = await http.MultipartFile.fromPath(
         "imagen",
@@ -97,7 +97,34 @@ class APIService {
     request.fields["fecha"] = newsModel.fecha;
     http.StreamedResponse streamedResponse = await request.send();
     http.Response response = await http.Response.fromStream(streamedResponse);
-    if(response.statusCode == 200){
+    if (response.statusCode == 201) {
+      String source = Utf8Decoder().convert(response.bodyBytes);
+      Map<String, dynamic> newsMap = json.decode(source);
+      NewsModel newsModel = NewsModel.fromJson(newsMap);
+      return newsModel;
+    }
+    return null;
+  }
+
+  Future<NewsModel?> updateNews2(NewsModel newsModel, File? imageNews) async {
+    String _path = pathProduction + "/noticias/${newsModel.id}/";
+    Uri _uri = Uri.parse(_path);
+    final request = http.MultipartRequest("PATCH", _uri);
+    if (imageNews != null) {
+      List<String> mimeType = mime(imageNews.path)!.split("/");
+      http.MultipartFile file = await http.MultipartFile.fromPath(
+        "imagen",
+        imageNews.path,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      );
+      request.files.add(file);
+    }
+    request.fields["titulo"] = newsModel.titulo;
+    request.fields["link"] = newsModel.link;
+    request.fields["fecha"] = newsModel.fecha;
+    http.StreamedResponse streamedResponse = await request.send();
+    http.Response response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
       String source = Utf8Decoder().convert(response.bodyBytes);
       Map<String, dynamic> newsMap = json.decode(source);
       NewsModel newsModel = NewsModel.fromJson(newsMap);

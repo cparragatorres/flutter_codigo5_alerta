@@ -11,11 +11,14 @@ import 'package:flutter_codigo5_alerta/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 
-
 class GeneralFormPage extends StatefulWidget {
   NewsModel? newsModel;
+  bool isNew;
 
-  GeneralFormPage({this.newsModel});
+  GeneralFormPage({
+    this.newsModel,
+    required this.isNew,
+  });
 
   @override
   State<GeneralFormPage> createState() => _GeneralFormPageState();
@@ -50,12 +53,11 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
     setState(() {});
   }
 
-  _save() async{
+  _save() async {
     if (_formKey.currentState!.validate()) {
       isLoading = true;
       setState(() {});
       NewsModel newsModel = NewsModel(
-        id: widget.newsModel!.id,
         link: _linkController.text,
         titulo: _titleController.text,
         fecha: _dateController.text,
@@ -64,23 +66,43 @@ class _GeneralFormPageState extends State<GeneralFormPage> {
 
       File? _image = imageNews == null ? null : File(imageNews!.path);
 
-      if(_image != null){
-        _image = await FlutterNativeImage.compressImage(_image.path, quality: 50,);
+      if (_image != null) {
+        _image = await FlutterNativeImage.compressImage(
+          _image.path,
+          quality: 50,
+        );
         print(_image.lengthSync());
       }
 
+      if(widget.isNew){
+        _apiService.registerNews(newsModel, _image).then((value){
+          if (value != null) {
+            snackBarMessage(context, TypeMessage.success);
+            Navigator.pop(context);
+          } else {
+            isLoading = false;
+            snackBarMessage(context, TypeMessage.error);
+            setState(() {});
+          }
+        });
+
+      }else{
+
+        newsModel.id = widget.newsModel!.id;
+
+        _apiService.updateNews2(newsModel, _image).then((value) {
+          if (value != null) {
+            snackBarMessage(context, TypeMessage.success);
+            Navigator.pop(context);
+          } else {
+            isLoading = false;
+            snackBarMessage(context, TypeMessage.error);
+            setState(() {});
+          }
+        });
+      }
 
 
-      _apiService.updateNews2(newsModel, _image).then((value) {
-        if (value != null) {
-          snackBarMessage(context, TypeMessage.success);
-          Navigator.pop(context);
-        } else {
-          isLoading = false;
-          snackBarMessage(context, TypeMessage.error);
-          setState(() {});
-        }
-      });
     }
   }
 

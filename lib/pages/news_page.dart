@@ -44,7 +44,16 @@ class _NewsPageState extends State<NewsPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kBrandSecondaryColor,
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => GeneralFormPage(isNew: true),
+            ),
+          ).then((value) {
+            getData();
+          });
+        },
       ),
       body: !isLoading
           ? ListView.builder(
@@ -56,7 +65,7 @@ class _NewsPageState extends State<NewsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GeneralFormPage(newsModel: news[index]),
+                        builder: (context) => GeneralFormPage(newsModel: news[index], isNew: false),
                       ),
                     ).then((value) {
                       getData();
