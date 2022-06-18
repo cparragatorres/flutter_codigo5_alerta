@@ -134,35 +134,53 @@ class APIService {
     return null;
   }
 
-
-  Future<List<AlertModel>> getAlerts() async{
+  Future<List<AlertModel>> getAlerts() async {
     String _path = pathProduction + "/incidentes/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.get(_uri);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       String source = const Utf8Decoder().convert(response.bodyBytes);
       List alerts = json.decode(source);
-      List<AlertModel> alertModelList = alerts.map((e) => AlertModel.fromJson(e)).toList();
+      List<AlertModel> alertModelList =
+          alerts.map((e) => AlertModel.fromJson(e)).toList();
       return alertModelList;
     }
     return [];
   }
 
-  Future<List<TipoIncidente>> getTypeAlerts() async{
+  Future<List<TipoIncidente>> getTypeAlerts() async {
     String _path = pathProduction + "/incidentes/tipos/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.get(_uri);
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       String source = const Utf8Decoder().convert(response.bodyBytes);
       List typeAlerts = json.decode(source);
-      List<TipoIncidente> typeAlertModelList = typeAlerts.map((e) => TipoIncidente.fromJson(e)).toList();
+      List<TipoIncidente> typeAlertModelList =
+          typeAlerts.map((e) => TipoIncidente.fromJson(e)).toList();
       print(typeAlertModelList);
       return typeAlertModelList;
     }
     return [];
   }
 
-
-
-
+  registerAlert() async {
+    String _path = pathProduction + "/incidentes/crear/";
+    Uri _uri = Uri.parse(_path);
+    http.Response response = await http.post(
+      _uri,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token ${spGlobal.token}",
+      },
+      body: json.encode(
+        {
+          "latitud": 0,
+          "longitud": 0,
+          "tipoIncidente": 5,
+          "estado": "Abierto",
+        },
+      ),
+    );
+    print(response.statusCode);
+  }
 }

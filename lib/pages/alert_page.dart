@@ -42,7 +42,9 @@ class _AlertPageState extends State<AlertPage> {
           },
         );
       },
-    );
+    ).then((value){
+
+    });
   }
 
   @override

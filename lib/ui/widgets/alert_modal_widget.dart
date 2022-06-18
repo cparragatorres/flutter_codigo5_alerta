@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
+import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 
@@ -93,7 +94,10 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
           ),
           ButtonNormalWidget(
             title: "Enviar Alerta",
-            onPressed: () {},
+            onPressed: () {
+              APIService apiService = APIService();
+              apiService.registerAlert();
+            },
           ),
           const SizedBox(
             height: 10.0,
