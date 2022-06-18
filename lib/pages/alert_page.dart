@@ -12,6 +12,7 @@ class AlertPage extends StatefulWidget {
 class _AlertPageState extends State<AlertPage> {
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
+  List<TipoIncidente> typeAlerts = [];
 
   @override
   void initState() {
@@ -20,14 +21,10 @@ class _AlertPageState extends State<AlertPage> {
     getData();
   }
 
-  getData() {
-    _apiService.getAlerts().then((value) {
-      alerts = value;
-      setState(() {});
-    });
-
-    _apiService.getTypeAlerts();
-
+  getData()async {
+    alerts = await _apiService.getAlerts();
+    typeAlerts = await _apiService.getTypeAlerts();
+    setState(() {});
   }
 
   showBottomForm() {
