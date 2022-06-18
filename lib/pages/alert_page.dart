@@ -17,7 +17,7 @@ class _AlertPageState extends State<AlertPage> {
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
   List<TipoIncidente> typeAlerts = [];
-
+  final DateFormat formatter = DateFormat('d-MMM-y');
   int typeAlertValue = 0;
 
   @override
@@ -32,6 +32,12 @@ class _AlertPageState extends State<AlertPage> {
     typeAlerts = await _apiService.getTypeAlerts();
     typeAlertValue = typeAlerts.first.id;
     setState(() {});
+  }
+  
+  convertDate(String date){
+    DateTime dateTime = DateFormat('d-M-y', "es").parse(date);
+    final String formatted = formatter.format(dateTime);
+    return formatted;
   }
 
   showBottomForm() {
@@ -49,12 +55,7 @@ class _AlertPageState extends State<AlertPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    String myDate = "16-06-2022";
-    DateTime dateTime = DateFormat('d/M/y', "es").parse(myDate);
-    final DateFormat formatter = DateFormat('d-MMM-y');
-    final String formatted = formatter.format(dateTime);
-    print(formatted);
+    
 
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
@@ -97,7 +98,7 @@ class _AlertPageState extends State<AlertPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    alerts[index].fecha,
+                    convertDate(alerts[index].fecha),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 13.0,
