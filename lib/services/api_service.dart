@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_codigo5_alerta/helpers/sp_global.dart';
+import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/models/user_model.dart';
 import 'package:flutter_codigo5_alerta/utils/constants.dart';
@@ -132,4 +133,21 @@ class APIService {
     }
     return null;
   }
+
+
+  Future<List<AlertModel>> getAlerts() async{
+    String _path = pathProduction + "/incidentes/";
+    Uri _uri = Uri.parse(_path);
+    http.Response response = await http.get(_uri);
+    if(response.statusCode == 200){
+      String source = const Utf8Decoder().convert(response.bodyBytes);
+      List alerts = json.decode(source);
+      List<AlertModel> alertModelList = alerts.map((e) => AlertModel.fromJson(e)).toList();
+      print(alertModelList);
+      return alertModelList;
+    }
+    return [];
+  }
+
+
 }
