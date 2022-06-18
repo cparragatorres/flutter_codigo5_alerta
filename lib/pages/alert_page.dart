@@ -38,6 +38,8 @@ class _AlertPageState extends State<AlertPage> {
       builder: (BuildContext context) {
         return AlertModalWidget(
           typeAlerts: typeAlerts,
+          onSelected: (int? value){
+          },
         );
       },
     );

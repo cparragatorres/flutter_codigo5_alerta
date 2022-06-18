@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
@@ -6,13 +5,18 @@ import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
 
 class AlertModalWidget extends StatefulWidget {
   List<TipoIncidente> typeAlerts;
-  AlertModalWidget({required this.typeAlerts});
+  Function(int?) onSelected;
+
+  AlertModalWidget({
+    required this.typeAlerts,
+    required this.onSelected,
+  });
+
   @override
   State<AlertModalWidget> createState() => _AlertModalWidgetState();
 }
 
 class _AlertModalWidgetState extends State<AlertModalWidget> {
-
   int typeAlertValue = 0;
 
   @override
@@ -21,8 +25,6 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
     super.initState();
     typeAlertValue = widget.typeAlerts.first.id;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,23 +59,34 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
               fontSize: 15.0,
             ),
           ),
-          DropdownButton(
-            value: typeAlertValue,
-            items: widget.typeAlerts
-                .map(
-                  (e) => DropdownMenuItem(
-                value: e.id,
-                child: Text(
-                  e.titulo,
-                ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: typeAlertValue,
+                isExpanded: true,
+                items: widget.typeAlerts
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.id,
+                        child: Text(
+                          e.titulo,
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (int? value) {
+                  typeAlertValue = value!;
+                  print(typeAlertValue);
+                  setState(() {});
+                },
+                // onChanged: widget.onSelected,
               ),
-            )
-                .toList(),
-            onChanged: (int? value) {
-              typeAlertValue = value!;
-              print(typeAlertValue);
-              setState((){});
-            },
+            ),
           ),
           const SizedBox(
             height: 10.0,
