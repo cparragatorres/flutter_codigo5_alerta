@@ -7,8 +7,8 @@ class AlertAuxModel {
     required this.estado,
   });
 
-  int latitud;
-  int longitud;
+  double latitud;
+  double longitud;
   int tipoIncidente;
   String estado;
 

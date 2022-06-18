@@ -4,6 +4,8 @@ import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/alert_modal_widget.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/button_normal_widget.dart';
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart';
 
 class AlertPage extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class AlertPage extends StatefulWidget {
 }
 
 class _AlertPageState extends State<AlertPage> {
+
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
   List<TipoIncidente> typeAlerts = [];
@@ -38,17 +41,21 @@ class _AlertPageState extends State<AlertPage> {
       builder: (BuildContext context) {
         return AlertModalWidget(
           typeAlerts: typeAlerts,
-          onSelected: (int? value){
-          },
+          onSelected: (int? value) {},
         );
       },
-    ).then((value){
-
-    });
+    ).then((value) {});
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // String myDate = "14-02-2022";
+    DateTime now = DateTime.now();
+    DateFormat formatter = DateFormat('d-MMMM-y', "es");
+    String formatted = formatter.format(now);
+    print(formatted);
+
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
       floatingActionButton: FloatingActionButton(

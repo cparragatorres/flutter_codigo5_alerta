@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/models/alert_aux_model.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
@@ -96,7 +97,13 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
             title: "Enviar Alerta",
             onPressed: () {
               APIService apiService = APIService();
-              apiService.registerAlert();
+              AlertAuxModel alertAuxModel = AlertAuxModel(
+                latitud: -16.379511,
+                longitud: -71.544748,
+                tipoIncidente: typeAlertValue,
+                estado: "Abierto",
+              );
+              apiService.registerAlert(alertAuxModel);
             },
           ),
           const SizedBox(
