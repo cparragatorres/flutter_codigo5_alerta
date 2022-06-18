@@ -26,10 +26,50 @@ class _AlertPageState extends State<AlertPage> {
     });
   }
 
+  showBottomForm() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButton(
+                items: [
+                  DropdownMenuItem(
+                    value: "a",
+                    child: Text("Robo"),
+                  ),
+                  DropdownMenuItem(
+                    value: "b",
+                    child: Text("Secuestro"),
+                  ),
+                  DropdownMenuItem(
+                    value: "c",
+                    child: Text("Ebrios en la calle"),
+                  ),
+                ],
+                onChanged: (value) {},
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kBrandSecondaryColor,
+        onPressed: () {
+          showBottomForm();
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         backgroundColor: kBrandPrimaryColor,
         title: Text("Alertas"),
@@ -56,10 +96,7 @@ class _AlertPageState extends State<AlertPage> {
                 "${alerts[index].ciudadanoNombre} (${alerts[index].datosCiudadano.dni})",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 13.0
-                ),
+                style: const TextStyle(color: Colors.white70, fontSize: 13.0),
               ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
