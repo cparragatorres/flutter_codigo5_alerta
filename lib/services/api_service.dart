@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_codigo5_alerta/helpers/sp_global.dart';
+import 'package:flutter_codigo5_alerta/models/alert_aux_model.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/models/news_model.dart';
 import 'package:flutter_codigo5_alerta/models/user_model.dart';
@@ -163,7 +164,7 @@ class APIService {
     return [];
   }
 
-  registerAlert() async {
+  registerAlert(AlertAuxModel alertAuxModel) async {
     String _path = pathProduction + "/incidentes/crear/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.post(
@@ -172,14 +173,7 @@ class APIService {
         "Content-Type": "application/json",
         "Authorization": "Token ${spGlobal.token}",
       },
-      body: json.encode(
-        {
-          "latitud": 0,
-          "longitud": 0,
-          "tipoIncidente": 5,
-          "estado": "Abierto",
-        },
-      ),
+      body: json.encode(alertAuxModel.toJson()),
     );
     print(response.statusCode);
   }
