@@ -50,10 +50,10 @@ class _AlertPageState extends State<AlertPage> {
   @override
   Widget build(BuildContext context) {
 
-    // String myDate = "14-02-2022";
-    DateTime now = DateTime.now();
-    DateFormat formatter = DateFormat('d-MMMM-y', "es");
-    String formatted = formatter.format(now);
+    String myDate = "16-06-2022";
+    DateTime dateTime = DateFormat('d/M/y', "es").parse(myDate);
+    final DateFormat formatter = DateFormat('d-MMM-y');
+    final String formatted = formatter.format(dateTime);
     print(formatted);
 
     return Scaffold(
