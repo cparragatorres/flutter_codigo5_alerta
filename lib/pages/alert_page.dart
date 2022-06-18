@@ -14,6 +14,8 @@ class _AlertPageState extends State<AlertPage> {
   List<AlertModel> alerts = [];
   List<TipoIncidente> typeAlerts = [];
 
+  int typeAlertValue = 0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -21,9 +23,10 @@ class _AlertPageState extends State<AlertPage> {
     getData();
   }
 
-  getData()async {
+  getData() async {
     alerts = await _apiService.getAlerts();
     typeAlerts = await _apiService.getTypeAlerts();
+    typeAlertValue = typeAlerts.first.id;
     setState(() {});
   }
 
@@ -61,26 +64,24 @@ class _AlertPageState extends State<AlertPage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.0,
-
                 ),
               ),
               DropdownButton(
-                items: [
-                  DropdownMenuItem(
-                    value: "a",
-                    child: Text("Robo"),
-                  ),
-                  DropdownMenuItem(
-                    value: "b",
-                    child: Text("Secuestro"),
-                  ),
-                  DropdownMenuItem(
-                    value: "c",
-                    child: Text("Ebrios en la calle"),
-                  ),
-                ],
-                onChanged: (value) {
-
+                value: typeAlertValue,
+                items: typeAlerts
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.id,
+                        child: Text(
+                          e.titulo,
+                        ),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (int? value) {
+                  typeAlertValue = value!;
+                  print(typeAlertValue);
+                  setState((){});
                 },
               ),
               const SizedBox(
