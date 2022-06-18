@@ -143,11 +143,26 @@ class APIService {
       String source = const Utf8Decoder().convert(response.bodyBytes);
       List alerts = json.decode(source);
       List<AlertModel> alertModelList = alerts.map((e) => AlertModel.fromJson(e)).toList();
-      print(alertModelList);
       return alertModelList;
     }
     return [];
   }
+
+  Future<List<TipoIncidente>> getTypeAlerts() async{
+    String _path = pathProduction + "/incidentes/tipos/";
+    Uri _uri = Uri.parse(_path);
+    http.Response response = await http.get(_uri);
+    if(response.statusCode == 200){
+      String source = const Utf8Decoder().convert(response.bodyBytes);
+      List typeAlerts = json.decode(source);
+      List<TipoIncidente> typeAlertModelList = typeAlerts.map((e) => TipoIncidente.fromJson(e)).toList();
+      print(typeAlertModelList);
+      return typeAlertModelList;
+    }
+    return [];
+  }
+
+
 
 
 }

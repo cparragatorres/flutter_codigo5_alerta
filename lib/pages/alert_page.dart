@@ -25,6 +25,9 @@ class _AlertPageState extends State<AlertPage> {
       alerts = value;
       setState(() {});
     });
+
+    _apiService.getTypeAlerts();
+
   }
 
   showBottomForm() {
