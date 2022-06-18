@@ -38,6 +38,11 @@ class _AlertPageState extends State<AlertPage> {
         itemCount: alerts.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.white.withOpacity(0.05),
+            ),
             child: ListTile(
               title: Text(
                 alerts[index].tipoIncidente.titulo,
@@ -48,9 +53,12 @@ class _AlertPageState extends State<AlertPage> {
                 ),
               ),
               subtitle: Text(
-                "${alerts[index].ciudadanoNombre}",
+                "${alerts[index].ciudadanoNombre} (${alerts[index].datosCiudadano.dni})",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white70,
+                  fontSize: 13.0
                 ),
               ),
               trailing: Column(
