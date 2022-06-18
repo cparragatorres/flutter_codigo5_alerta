@@ -79,7 +79,9 @@ class _AlertPageState extends State<AlertPage> {
                     child: Text("Ebrios en la calle"),
                   ),
                 ],
-                onChanged: (value) {},
+                onChanged: (value) {
+
+                },
               ),
               const SizedBox(
                 height: 10.0,
