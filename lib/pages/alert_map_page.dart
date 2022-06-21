@@ -9,6 +9,8 @@ class AlertMapPage extends StatefulWidget {
 class _AlertMapPageState extends State<AlertMapPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+
+    );
   }
 }
