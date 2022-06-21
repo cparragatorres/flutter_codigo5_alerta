@@ -77,7 +77,29 @@ class _AlertPageState extends State<AlertPage> {
           ? Column(
               children: [
                 //Dropdown...
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      isExpanded: true,
+                      value: typeAlertValue,
+                      items: typeAlerts.map(
+                        (e) => DropdownMenuItem(
+                          value: e.id,
+                          child: Text(e.titulo),
+                        ),
+                      ).toList(),
+                      onChanged: (value) {
 
+                      },
+                    ),
+                  ),
+                ),
 
                 Expanded(
                   child: ListView.builder(
