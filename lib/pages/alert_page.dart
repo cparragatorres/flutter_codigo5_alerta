@@ -15,6 +15,7 @@ class AlertPage extends StatefulWidget {
 class _AlertPageState extends State<AlertPage> {
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
+  List<AlertModel> alertsAux = [];
   List<TipoIncidente> typeAlerts = [];
   List<TipoIncidente> typeAlerts2 = [];
   final DateFormat formatter = DateFormat('d-MMM-y');
@@ -32,6 +33,7 @@ class _AlertPageState extends State<AlertPage> {
     isLoading = true;
     setState(() {});
     alerts = await _apiService.getAlerts();
+    alertsAux = alerts;
     typeAlerts = await _apiService.getTypeAlerts();
     typeAlerts2 = typeAlerts;
     typeAlerts2.insert(
@@ -71,12 +73,19 @@ class _AlertPageState extends State<AlertPage> {
     });
   }
 
-  filterAlertType(){
+  filterAlertType(int alertTypeId){
     //
+    alerts = alertsAux;
+    if(alertTypeId != 0){
+      alerts = alerts.where((element) => element.tipoIncidente.id == alertTypeId).toList();
+    }
+    setState((){});
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
       floatingActionButton: FloatingActionButton(
@@ -117,7 +126,7 @@ class _AlertPageState extends State<AlertPage> {
                           .toList(),
                       onChanged: (int? value) {
                         typeAlertValue = value!;
-                        filterAlertType();
+                        filterAlertType(typeAlertValue);
                         setState((){});
                       },
                     ),
