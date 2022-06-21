@@ -164,7 +164,7 @@ class APIService {
     return [];
   }
 
-  registerAlert(AlertAuxModel alertAuxModel) async {
+  Future<AlertModel?> registerAlert(AlertAuxModel alertAuxModel) async {
     String _path = pathProduction + "/incidentes/crear/";
     Uri _uri = Uri.parse(_path);
     http.Response response = await http.post(
@@ -175,6 +175,12 @@ class APIService {
       },
       body: json.encode(alertAuxModel.toJson()),
     );
-    print(response.statusCode);
+    if(response.statusCode == 201){
+      String source = Utf8Decoder().convert(response.bodyBytes);
+      Map<String, dynamic> myMap = json.decode(source);
+      AlertModel alertModel = AlertModel.fromJson(myMap);
+      return alertModel;
+    }
+    return null;
   }
 }
