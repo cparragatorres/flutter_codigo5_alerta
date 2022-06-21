@@ -13,7 +13,6 @@ class AlertPage extends StatefulWidget {
 }
 
 class _AlertPageState extends State<AlertPage> {
-
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
   List<TipoIncidente> typeAlerts = [];
@@ -30,15 +29,15 @@ class _AlertPageState extends State<AlertPage> {
 
   getData() async {
     isLoading = true;
-    setState((){});
+    setState(() {});
     alerts = await _apiService.getAlerts();
     typeAlerts = await _apiService.getTypeAlerts();
     typeAlertValue = typeAlerts.first.id;
     isLoading = false;
     setState(() {});
   }
-  
-  convertDate(String date){
+
+  convertDate(String date) {
     DateTime dateTime = DateFormat('d-M-y', "es").parse(date);
     String formatted = formatter.format(dateTime);
     return formatted;
@@ -61,7 +60,6 @@ class _AlertPageState extends State<AlertPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
       floatingActionButton: FloatingActionButton(
@@ -75,55 +73,69 @@ class _AlertPageState extends State<AlertPage> {
         backgroundColor: kBrandPrimaryColor,
         title: Text("Alertas"),
       ),
-      body: !isLoading ? ListView.builder(
-        itemCount: alerts.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.white.withOpacity(0.05),
-            ),
-            child: ListTile(
-              title: Text(
-                alerts[index].tipoIncidente.titulo,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14.0,
-                ),
-              ),
-              subtitle: Text(
-                "${alerts[index].ciudadanoNombre} (${alerts[index].datosCiudadano.dni})",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: Colors.white70, fontSize: 13.0),
-              ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    convertDate(alerts[index].fecha),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13.0,
-                    ),
+      body: !isLoading
+          ? Column(
+              children: [
+                //Dropdown...
+
+
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: alerts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.white.withOpacity(0.05),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            alerts[index].tipoIncidente.titulo,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${alerts[index].ciudadanoNombre} (${alerts[index].datosCiudadano.dni})",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 13.0),
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                convertDate(alerts[index].fecha),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                              Text(
+                                alerts[index].hora,
+                                style: const TextStyle(
+                                  color: Colors.white54,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  Text(
-                    alerts[index].hora,
-                    style: const TextStyle(
-                      color: Colors.white54,
-                      fontSize: 13.0,
-                    ),
-                  ),
-                ],
-              ),
+                )
+              ],
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
             ),
-          );
-        },
-      ): const Center(
-        child: CircularProgressIndicator(),
-      ),
     );
   }
 }
