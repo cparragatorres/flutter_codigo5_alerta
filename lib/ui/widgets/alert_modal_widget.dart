@@ -20,6 +20,8 @@ class AlertModalWidget extends StatefulWidget {
 
 class _AlertModalWidgetState extends State<AlertModalWidget> {
   int typeAlertValue = 0;
+  APIService apiService = APIService();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -28,89 +30,105 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
     typeAlertValue = widget.typeAlerts.first.id;
   }
 
+  registerAlert() {
+    isLoading = true;
+    setState(() {});
+    AlertAuxModel alertAuxModel = AlertAuxModel(
+      latitud: -16.379511,
+      longitud: -71.544748,
+      tipoIncidente: typeAlertValue,
+      estado: "Abierto",
+    );
+    apiService.registerAlert(alertAuxModel).then((value) {
+      if (value != null) {
+        Navigator.pop(context);
+      }
+      isLoading = false;
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: 200,
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(26),
-          topLeft: Radius.circular(26),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 4,
-            width: 100,
-            decoration: BoxDecoration(
-              color: kBrandSecondaryColor,
-              borderRadius: BorderRadius.circular(20.0),
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(26),
+              topLeft: Radius.circular(26),
             ),
           ),
-          const SizedBox(
-            height: 14.0,
-          ),
-          const Text(
-            "Por favor, selecciona y envia la alerta correspondiente",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 15.0,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                value: typeAlertValue,
-                isExpanded: true,
-                items: widget.typeAlerts
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e.id,
-                        child: Text(
-                          e.titulo,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (int? value) {
-                  typeAlertValue = value!;
-                  print(typeAlertValue);
-                  setState(() {});
-                },
-                // onChanged: widget.onSelected,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 4,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: kBrandSecondaryColor,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 14.0,
+              ),
+              const Text(
+                "Por favor, selecciona y envia la alerta correspondiente",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15.0,
+                ),
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: typeAlertValue,
+                    isExpanded: true,
+                    items: widget.typeAlerts
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.id,
+                            child: Text(
+                              e.titulo,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (int? value) {
+                      typeAlertValue = value!;
+                      print(typeAlertValue);
+                      setState(() {});
+                    },
+                    // onChanged: widget.onSelected,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              ButtonNormalWidget(
+                title: "Enviar Alerta",
+                onPressed: () {
+                  registerAlert();
+                },
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          ButtonNormalWidget(
-            title: "Enviar Alerta",
-            onPressed: () {
-              APIService apiService = APIService();
-              AlertAuxModel alertAuxModel = AlertAuxModel(
-                latitud: -16.379511,
-                longitud: -71.544748,
-                tipoIncidente: typeAlertValue,
-                estado: "Abierto",
-              );
-              apiService.registerAlert(alertAuxModel);
-            },
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-        ],
-      ),
+        ),
+
+      ],
     );
   }
 }
