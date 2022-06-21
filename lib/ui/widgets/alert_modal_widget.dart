@@ -50,9 +50,13 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    double height = MediaQuery.of(context).size.height;
+
     return Stack(
       children: [
         Container(
+          height: height * 0.27,
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -127,7 +131,19 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
             ],
           ),
         ),
-
+        isLoading ? Container(
+          height: height * 0.27,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.6),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(26),
+              topLeft: Radius.circular(26),
+            ),
+          ),
+          alignment: Alignment.center,
+          child: const CircularProgressIndicator(),
+        ) : const SizedBox(),
       ],
     );
   }
