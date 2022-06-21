@@ -29,6 +29,8 @@ class _AlertPageState extends State<AlertPage> {
   }
 
   getData() async {
+    isLoading = true;
+    setState((){});
     alerts = await _apiService.getAlerts();
     typeAlerts = await _apiService.getTypeAlerts();
     typeAlertValue = typeAlerts.first.id;
@@ -52,7 +54,9 @@ class _AlertPageState extends State<AlertPage> {
           onSelected: (int? value) {},
         );
       },
-    ).then((value) {});
+    ).then((value) {
+      getData();
+    });
   }
 
   @override
