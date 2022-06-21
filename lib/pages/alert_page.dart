@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
+import 'package:flutter_codigo5_alerta/pages/alert_map_page.dart';
 import 'package:flutter_codigo5_alerta/services/api_service.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/ui/widgets/alert_modal_widget.dart';
@@ -73,19 +74,19 @@ class _AlertPageState extends State<AlertPage> {
     });
   }
 
-  filterAlertType(int alertTypeId){
+  filterAlertType(int alertTypeId) {
     //
     alerts = alertsAux;
-    if(alertTypeId != 0){
-      alerts = alerts.where((element) => element.tipoIncidente.id == alertTypeId).toList();
+    if (alertTypeId != 0) {
+      alerts = alerts
+          .where((element) => element.tipoIncidente.id == alertTypeId)
+          .toList();
     }
-    setState((){});
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
       floatingActionButton: FloatingActionButton(
@@ -98,6 +99,15 @@ class _AlertPageState extends State<AlertPage> {
       appBar: AppBar(
         backgroundColor: kBrandPrimaryColor,
         title: Text("Alertas"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AlertMapPage()));
+            },
+            icon: Icon(Icons.location_on),
+          ),
+        ],
       ),
       body: !isLoading
           ? Column(
@@ -127,7 +137,7 @@ class _AlertPageState extends State<AlertPage> {
                       onChanged: (int? value) {
                         typeAlertValue = value!;
                         filterAlertType(typeAlertValue);
-                        setState((){});
+                        setState(() {});
                       },
                     ),
                   ),
