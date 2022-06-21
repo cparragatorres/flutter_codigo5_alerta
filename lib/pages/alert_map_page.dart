@@ -36,6 +36,23 @@ class _AlertMapPageState extends State<AlertMapPage> {
           Marker _myMarker = Marker(
             markerId: _myMarkerId,
             position: latLng,
+            infoWindow: InfoWindow(
+              title: "Hola",
+            ),
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+            onTap: (){
+              print("MARKER");
+            },
+            draggable: true,
+            onDragStart: (LatLng position){
+
+            },
+            onDrag: (LatLng position){
+              print("DRAGGGGGG");
+            },
+            onDragEnd: (LatLng position){
+              print("DRAGGGGGG ENDDDDDDDDDDDDDDDDD");
+            }
           );
           _markers[_myMarkerId] = _myMarker;
           setState((){});
