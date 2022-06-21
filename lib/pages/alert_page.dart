@@ -16,6 +16,7 @@ class _AlertPageState extends State<AlertPage> {
   final APIService _apiService = APIService();
   List<AlertModel> alerts = [];
   List<TipoIncidente> typeAlerts = [];
+  List<TipoIncidente> typeAlerts2 = [];
   final DateFormat formatter = DateFormat('d-MMM-y');
   int typeAlertValue = 0;
   bool isLoading = true;
@@ -32,7 +33,19 @@ class _AlertPageState extends State<AlertPage> {
     setState(() {});
     alerts = await _apiService.getAlerts();
     typeAlerts = await _apiService.getTypeAlerts();
-    typeAlertValue = typeAlerts.first.id;
+    typeAlerts2 = typeAlerts;
+    typeAlerts2.insert(
+      0,
+      TipoIncidente(
+        id: 0,
+        value: 0,
+        text: "Todos",
+        titulo: "Todos",
+        area: "SERENAZGO",
+        nivel: "ALTA",
+      ),
+    );
+    typeAlertValue = typeAlerts2.first.id;
     isLoading = false;
     setState(() {});
   }
@@ -58,6 +71,10 @@ class _AlertPageState extends State<AlertPage> {
     });
   }
 
+  filterAlertType(){
+    //
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +95,10 @@ class _AlertPageState extends State<AlertPage> {
               children: [
                 //Dropdown...
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 4.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12.0),
@@ -88,14 +107,18 @@ class _AlertPageState extends State<AlertPage> {
                     child: DropdownButton(
                       isExpanded: true,
                       value: typeAlertValue,
-                      items: typeAlerts.map(
-                        (e) => DropdownMenuItem(
-                          value: e.id,
-                          child: Text(e.titulo),
-                        ),
-                      ).toList(),
-                      onChanged: (value) {
-
+                      items: typeAlerts2
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e.id,
+                              child: Text(e.titulo),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (int? value) {
+                        typeAlertValue = value!;
+                        filterAlertType();
+                        setState((){});
                       },
                     ),
                   ),
