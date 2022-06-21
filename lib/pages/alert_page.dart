@@ -19,6 +19,7 @@ class _AlertPageState extends State<AlertPage> {
   List<TipoIncidente> typeAlerts = [];
   final DateFormat formatter = DateFormat('d-MMM-y');
   int typeAlertValue = 0;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -31,12 +32,13 @@ class _AlertPageState extends State<AlertPage> {
     alerts = await _apiService.getAlerts();
     typeAlerts = await _apiService.getTypeAlerts();
     typeAlertValue = typeAlerts.first.id;
+    isLoading = false;
     setState(() {});
   }
   
   convertDate(String date){
     DateTime dateTime = DateFormat('d-M-y', "es").parse(date);
-    final String formatted = formatter.format(dateTime);
+    String formatted = formatter.format(dateTime);
     return formatted;
   }
 
@@ -55,7 +57,6 @@ class _AlertPageState extends State<AlertPage> {
 
   @override
   Widget build(BuildContext context) {
-    
 
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
@@ -70,7 +71,7 @@ class _AlertPageState extends State<AlertPage> {
         backgroundColor: kBrandPrimaryColor,
         title: Text("Alertas"),
       ),
-      body: ListView.builder(
+      body: !isLoading ? ListView.builder(
         itemCount: alerts.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
@@ -116,6 +117,8 @@ class _AlertPageState extends State<AlertPage> {
             ),
           );
         },
+      ): const Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
