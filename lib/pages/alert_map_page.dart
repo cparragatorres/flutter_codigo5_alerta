@@ -10,7 +10,6 @@ class AlertMapPage extends StatefulWidget {
 }
 
 class _AlertMapPageState extends State<AlertMapPage> {
-
   Map<MarkerId, Marker> _markers = {};
   Set<Marker> _markers2 = {};
 
@@ -37,11 +36,30 @@ class _AlertMapPageState extends State<AlertMapPage> {
     },
   ];
 
+  @override
+  initState(){
+    super.initState();
+    getMarkersLocation();
+  }
 
-
+  getMarkersLocation() {
+    myLocations.forEach((element) {
+      print(element);
+      MarkerId _markerId = MarkerId(_markers2.length.toString());
+      Marker _marker = Marker(
+        markerId: _markerId,
+        position: LatLng(element["latitude"], element["longitude"]),
+      );
+      _markers2.add(_marker);
+      // _markers[_markerId] = _marker;
+    });
+    setState((){});
+  }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: _cameraPosition,
@@ -57,29 +75,27 @@ class _AlertMapPageState extends State<AlertMapPage> {
         onTap: (LatLng latLng) {
           MarkerId _myMarkerId = MarkerId(_markers.length.toString());
           Marker _myMarker = Marker(
-            markerId: _myMarkerId,
-            position: latLng,
-            infoWindow: InfoWindow(
-              title: "Hola",
-            ),
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-            onTap: (){
-              print("MARKER");
-            },
-            draggable: true,
-            onDragStart: (LatLng position){
-
-            },
-            onDrag: (LatLng position){
-              print("DRAGGGGGG");
-            },
-            onDragEnd: (LatLng position){
-              print("DRAGGGGGG ENDDDDDDDDDDDDDDDDD");
-            }
-          );
+              markerId: _myMarkerId,
+              position: latLng,
+              infoWindow: InfoWindow(
+                title: "Hola",
+              ),
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueAzure),
+              onTap: () {
+                print("MARKER");
+              },
+              draggable: true,
+              onDragStart: (LatLng position) {},
+              onDrag: (LatLng position) {
+                print("DRAGGGGGG");
+              },
+              onDragEnd: (LatLng position) {
+                print("DRAGGGGGG ENDDDDDDDDDDDDDDDDD");
+              });
           _markers[_myMarkerId] = _myMarker;
           _markers2.add(_myMarker);
-          setState((){});
+          setState(() {});
         },
       ),
     );
