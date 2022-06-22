@@ -102,8 +102,14 @@ class _AlertPageState extends State<AlertPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AlertMapPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AlertMapPage(
+                    alerts: alertsAux,
+                  ),
+                ),
+              );
             },
             icon: Icon(Icons.location_on),
           ),

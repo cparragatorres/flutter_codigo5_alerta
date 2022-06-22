@@ -1,10 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/utils/map_style.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AlertMapPage extends StatefulWidget {
+
+  List<AlertModel> alerts;
+  AlertMapPage({required this.alerts});
+
   @override
   State<AlertMapPage> createState() => _AlertMapPageState();
 }
@@ -39,7 +44,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
   @override
   initState(){
     super.initState();
-    getMarkersLocation();
+    // getMarkersLocation();
+    getMarkerAlerts();
   }
 
   getMarkersLocation() {
@@ -55,6 +61,22 @@ class _AlertMapPageState extends State<AlertMapPage> {
     });
     setState((){});
   }
+
+  getMarkerAlerts(){
+    widget.alerts.forEach((element) {
+      MarkerId _markerId = MarkerId(_markers2.length.toString());
+      Marker _marker = Marker(
+        markerId: _markerId,
+        position: LatLng(element.latitud, element.longitud),
+      );
+      _markers2.add(_marker);
+    });
+
+    setState((){});
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
