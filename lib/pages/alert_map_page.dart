@@ -110,6 +110,9 @@ class _AlertMapPageState extends State<AlertMapPage> {
                     color: Colors.white
                 ),
               ),
+              const SizedBox(
+                height: 6.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -130,6 +133,28 @@ class _AlertMapPageState extends State<AlertMapPage> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Elvis Barrionuevo",
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white
+                ),
+              ),
+              const SizedBox(
+                height: 6.0,
+              ),
+              Text(
+                "DNI: 23442211",
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white
+                ),
               ),
             ],
           ),
