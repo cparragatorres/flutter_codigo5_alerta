@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_codigo5_alerta/models/alert_model.dart';
 import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/utils/map_style.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AlertMapPage extends StatefulWidget {
@@ -92,7 +93,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 "Detalle de la alerta",
                 style: TextStyle(
                   fontSize: 14.0,
@@ -161,7 +162,11 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        // String number = "232323";
+                        await FlutterPhoneDirectCaller.callNumber(alertModel.datosCiudadano.telefono);
+
+                      },
                       icon: const Icon(Icons.call),
                       label: const Text(
                         "Llamar",
