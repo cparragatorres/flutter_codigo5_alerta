@@ -70,7 +70,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
         markerId: _markerId,
         position: LatLng(element.latitud, element.longitud),
         onTap: () {
-          showDetailAlert();
+          showDetailAlert(element);
         },
       );
       _markers2.add(_marker);
@@ -79,7 +79,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
     setState(() {});
   }
 
-  showDetailAlert() {
+  showDetailAlert(AlertModel alertModel) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -100,14 +100,14 @@ class _AlertMapPageState extends State<AlertMapPage> {
                   color: Colors.white,
                 ),
               ),
-              Divider(
+              const Divider(
                 indent: 12.0,
                 endIndent: 12.0,
                 color: Colors.white30,
               ),
               Text(
-                "Secuestro",
-                style: TextStyle(
+                alertModel.tipoIncidente.titulo,
+                style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
@@ -119,15 +119,15 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Fecha: 12/12/2022",
-                    style: TextStyle(
+                    "Fecha: ${alertModel.fecha}",
+                    style: const TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
                   Text(
-                    "Hora: 12:22:11",
-                    style: TextStyle(
+                    "Hora: ${alertModel.hora}",
+                    style: const TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
@@ -138,8 +138,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 height: 10.0,
               ),
               Text(
-                "Elvis Barrionuevo",
-                style: TextStyle(
+                alertModel.ciudadanoNombre,
+                style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
@@ -148,8 +148,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 height: 6.0,
               ),
               Text(
-                "DNI: 23442211",
-                style: TextStyle(
+                "DNI: ${alertModel.datosCiudadano.dni}",
+                style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.white),
@@ -162,15 +162,15 @@ class _AlertMapPageState extends State<AlertMapPage> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Icon(Icons.call),
-                      label: Text(
+                      icon: const Icon(Icons.call),
+                      label: const Text(
                         "Llamar",
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14.0),
                         ),
-                        primary: Color(0xfff72585),
+                        primary: const Color(0xfff72585),
                       ),
                     ),
                   ),
@@ -180,15 +180,15 @@ class _AlertMapPageState extends State<AlertMapPage> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {},
-                      icon: Icon(Icons.location_on),
-                      label: Text(
+                      icon: const Icon(Icons.location_on),
+                      label: const Text(
                         "Ver en mapa",
                       ),
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14.0),
                           ),
-                        primary: Color(0xff3f37c9),
+                        primary: const Color(0xff3f37c9),
                       ),
                     ),
                   ),
