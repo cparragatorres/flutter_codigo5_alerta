@@ -12,11 +12,33 @@ class AlertMapPage extends StatefulWidget {
 class _AlertMapPageState extends State<AlertMapPage> {
 
   Map<MarkerId, Marker> _markers = {};
+  Set<Marker> _markers2 = {};
 
   final CameraPosition _cameraPosition = const CameraPosition(
     target: LatLng(-16.389939, -71.547106),
-    zoom: 15,
+    zoom: 7,
   );
+
+  List myLocations = [
+    {
+      "latitude": -16.423201,
+      "longitude": -71.547758,
+      "text": "Marcador 1",
+    },
+    {
+      "latitude": -16.627975,
+      "longitude": -71.061622,
+      "text": "Marcador 2",
+    },
+    {
+      "latitude": -18.224637,
+      "longitude": -69.404926,
+      "text": "Marcador 3",
+    },
+  ];
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +52,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
         onMapCreated: (GoogleMapController controller) {
           controller.setMapStyle(json.encode(mapStyle));
         },
-        markers: _markers.values.toSet(),
+        // markers: _markers.values.toSet(),
+        markers: _markers2,
         onTap: (LatLng latLng) {
           MarkerId _myMarkerId = MarkerId(_markers.length.toString());
           Marker _myMarker = Marker(
@@ -55,6 +78,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
             }
           );
           _markers[_myMarkerId] = _myMarker;
+          _markers2.add(_myMarker);
           setState((){});
         },
       ),
