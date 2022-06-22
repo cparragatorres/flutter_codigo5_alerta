@@ -10,8 +10,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AlertMapPage extends StatefulWidget {
   List<AlertModel> alerts;
+  List<TipoIncidente> typeAlerts;
 
-  AlertMapPage({required this.alerts});
+  AlertMapPage({
+    required this.alerts,
+    required this.typeAlerts,
+  });
 
   @override
   State<AlertMapPage> createState() => _AlertMapPageState();
@@ -20,6 +24,7 @@ class AlertMapPage extends StatefulWidget {
 class _AlertMapPageState extends State<AlertMapPage> {
   Map<MarkerId, Marker> _markers = {};
   Set<Marker> _markers2 = {};
+  int typeAlertValue = 0;
 
   final CameraPosition _cameraPosition = const CameraPosition(
     target: LatLng(-16.389939, -71.547106),
@@ -49,6 +54,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
     super.initState();
     // getMarkersLocation();
     getMarkerAlerts();
+    typeAlertValue = widget.typeAlerts.first.id;
   }
 
   getMarkersLocation() {
@@ -88,9 +94,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
         return AlertDialog(
           backgroundColor: kBrandPrimaryColor,
           contentPadding: EdgeInsets.all(16.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -165,8 +170,8 @@ class _AlertMapPageState extends State<AlertMapPage> {
                     child: ElevatedButton.icon(
                       onPressed: () async {
                         // String number = "232323";
-                        await FlutterPhoneDirectCaller.callNumber(alertModel.datosCiudadano.telefono);
-
+                        await FlutterPhoneDirectCaller.callNumber(
+                            alertModel.datosCiudadano.telefono);
                       },
                       icon: const Icon(Icons.call),
                       label: const Text(
@@ -186,16 +191,18 @@ class _AlertMapPageState extends State<AlertMapPage> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        launchUrl(Uri.parse("https://maps.google.com/?q=${alertModel.latitud},${alertModel.longitud}"));
+                        //launchUrl(Uri.parse("https://maps.google.com/?q=${alertModel.latitud},${alertModel.longitud}"));
+                        launchUrl(Uri.parse(
+                            "https://www.google.com/maps/dir/?api=1&origin=34.1030032,-118.41046840000001&destination=34.059808,-118.368152"));
                       },
                       icon: const Icon(Icons.location_on),
                       label: const Text(
                         "Ver en mapa",
                       ),
                       style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14.0),
-                          ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14.0),
+                        ),
                         primary: const Color(0xff3f37c9),
                       ),
                     ),
@@ -212,42 +219,83 @@ class _AlertMapPageState extends State<AlertMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        initialCameraPosition: _cameraPosition,
-        compassEnabled: true,
-        zoomControlsEnabled: true,
-        zoomGesturesEnabled: false,
-        mapType: MapType.normal,
-        onMapCreated: (GoogleMapController controller) {
-          controller.setMapStyle(json.encode(mapStyle));
-        },
-        // markers: _markers.values.toSet(),
-        markers: _markers2,
-        // onTap: (LatLng latLng) {
-        //   MarkerId _myMarkerId = MarkerId(_markers.length.toString());
-        //   Marker _myMarker = Marker(
-        //       markerId: _myMarkerId,
-        //       position: latLng,
-        //       infoWindow: InfoWindow(
-        //         title: "Hola",
-        //       ),
-        //       icon: BitmapDescriptor.defaultMarkerWithHue(
-        //           BitmapDescriptor.hueAzure),
-        //       onTap: () {
-        //         print("MARKER");
-        //       },
-        //       draggable: true,
-        //       onDragStart: (LatLng position) {},
-        //       onDrag: (LatLng position) {
-        //         print("DRAGGGGGG");
-        //       },
-        //       onDragEnd: (LatLng position) {
-        //         print("DRAGGGGGG ENDDDDDDDDDDDDDDDDD");
-        //       });
-        //   _markers[_myMarkerId] = _myMarker;
-        //   _markers2.add(_myMarker);
-        //   setState(() {});
-        // },
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: _cameraPosition,
+            compassEnabled: true,
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: false,
+            mapType: MapType.normal,
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(json.encode(mapStyle));
+            },
+            // markers: _markers.values.toSet(),
+            markers: _markers2,
+            // onTap: (LatLng latLng) {
+            //   MarkerId _myMarkerId = MarkerId(_markers.length.toString());
+            //   Marker _myMarker = Marker(
+            //       markerId: _myMarkerId,
+            //       position: latLng,
+            //       infoWindow: InfoWindow(
+            //         title: "Hola",
+            //       ),
+            //       icon: BitmapDescriptor.defaultMarkerWithHue(
+            //           BitmapDescriptor.hueAzure),
+            //       onTap: () {
+            //         print("MARKER");
+            //       },
+            //       draggable: true,
+            //       onDragStart: (LatLng position) {},
+            //       onDrag: (LatLng position) {
+            //         print("DRAGGGGGG");
+            //       },
+            //       onDragEnd: (LatLng position) {
+            //         print("DRAGGGGGG ENDDDDDDDDDDDDDDDDD");
+            //       });
+            //   _markers[_myMarkerId] = _myMarker;
+            //   _markers2.add(_myMarker);
+            //   setState(() {});
+            // },
+          ),
+          SafeArea(
+            child: Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 12,
+                    offset: const Offset(4, 4),
+                  ),
+                ],
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  value: typeAlertValue,
+                  isExpanded: true,
+                  items: widget.typeAlerts
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e.titulo),
+                          value: e.id,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (int? value) {
+                    typeAlertValue = value!;
+                    setState((){});
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

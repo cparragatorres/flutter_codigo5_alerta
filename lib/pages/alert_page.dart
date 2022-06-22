@@ -107,6 +107,7 @@ class _AlertPageState extends State<AlertPage> {
                 MaterialPageRoute(
                   builder: (context) => AlertMapPage(
                     alerts: alertsAux,
+                    typeAlerts: typeAlerts2,
                   ),
                 ),
               );
