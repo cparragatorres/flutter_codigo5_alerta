@@ -34,8 +34,8 @@ class _AlertModalWidgetState extends State<AlertModalWidget> {
     isLoading = true;
     setState(() {});
     AlertAuxModel alertAuxModel = AlertAuxModel(
-      latitud: -16.379511,
-      longitud: -71.544748,
+      latitud: -14.056228,
+      longitud: -75.730303,
       tipoIncidente: typeAlertValue,
       estado: "Abierto",
     );
