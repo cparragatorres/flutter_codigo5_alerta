@@ -85,7 +85,10 @@ class _AlertMapPageState extends State<AlertMapPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: kBrandPrimaryColor,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.all(16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0)
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -107,8 +110,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white
-                ),
+                    color: Colors.white),
               ),
               const SizedBox(
                 height: 6.0,
@@ -121,16 +123,14 @@ class _AlertMapPageState extends State<AlertMapPage> {
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white
-                    ),
+                        color: Colors.white),
                   ),
                   Text(
                     "Hora: 12:22:11",
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white
-                    ),
+                        color: Colors.white),
                   ),
                 ],
               ),
@@ -142,8 +142,7 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white
-                ),
+                    color: Colors.white),
               ),
               const SizedBox(
                 height: 6.0,
@@ -153,8 +152,47 @@ class _AlertMapPageState extends State<AlertMapPage> {
                 style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white
-                ),
+                    color: Colors.white),
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.call),
+                      label: Text(
+                        "Llamar",
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14.0),
+                        ),
+                        primary: Color(0xfff72585),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 6.0,
+                  ),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.location_on),
+                      label: Text(
+                        "Ver en mapa",
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14.0),
+                          ),
+                        primary: Color(0xff3f37c9),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
