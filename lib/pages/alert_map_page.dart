@@ -6,6 +6,7 @@ import 'package:flutter_codigo5_alerta/ui/general/colors.dart';
 import 'package:flutter_codigo5_alerta/utils/map_style.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AlertMapPage extends StatefulWidget {
   List<AlertModel> alerts;
@@ -184,7 +185,9 @@ class _AlertMapPageState extends State<AlertMapPage> {
                   ),
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        launchUrl(Uri.parse("https://maps.google.com/?q=${alertModel.latitud},${alertModel.longitud}"));
+                      },
                       icon: const Icon(Icons.location_on),
                       label: const Text(
                         "Ver en mapa",
